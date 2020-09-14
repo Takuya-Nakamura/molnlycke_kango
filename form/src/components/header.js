@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import KeyVisual from './key_visual'
 
 export default class Header extends React.Component {
     render() {
@@ -9,6 +9,7 @@ export default class Header extends React.Component {
                 <div className="header-logo">
                     <img className="header-logo-image" src='./images/logo.png' />
                 </div>
+
             </header>
         );
     }

@@ -9,9 +9,7 @@ export class Page extends React.Component {
     render() {
         return (
             <div>
-                <div>test</div>
-
-                <Header />
+                {/* <Header /> */}
                 <Main />
                 <Footer />
             </div>
