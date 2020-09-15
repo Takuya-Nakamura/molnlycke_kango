@@ -15,9 +15,9 @@ export default class Main extends React.Component {
                     open="true"
                 />
 
-                <div className="key-visual__area">
+                {/* <div className="key-visual__area">
                     <KeyVisual />
-                </div>
+                </div> */}
 
                 <div className="title">
                     <h1>第34回日本手術看護学会年次大会 Web開催 専⽤サイト</h1>
@@ -44,7 +44,7 @@ export default class Main extends React.Component {
 
 
                 <div className="product-description" >
-                    商品説明
+                    製品説明
                 </div>
 
                 <div className="form">

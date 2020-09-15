@@ -316,15 +316,14 @@ footer{
 
 
 // keyVisual
-
 .key-visual__area{
   margin-bottom: 30px;
 }
 .key-visual{
-  margin: 0 calc(50% - 50vw) ;
-  width: 100vw;
-  
+  // margin: 0 calc(50% - 49.5vw) ;
+  // width: 99vw;
 }
+
 .key-visual-item{
   display: inline-block;
   width: 33.3%;
