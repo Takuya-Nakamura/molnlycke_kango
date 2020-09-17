@@ -1,43 +1,21 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MoveiModal from './movie_modal'
-import KeyVisual from './key_visual'
-
-import SlideShow from './slideshow'
 
 export default class Main extends React.Component {
 
     render() {
         return (
             <main className="main">
-                <MoveiModal
-                    open="true"
-                />
-
-                {/* <div className="key-visual__area">
-                    <KeyVisual />
-                </div> */}
 
                 <div className="title">
                     <h1>第34回日本手術看護学会年次大会 Web開催 専⽤サイト</h1>
                 </div>
 
 
-                {/* <div className="key-visual__area">
-                    <SlideShow />
-                </div> */}
-
-
-
-                <div className="description">
-                    <p>当サイトは「第34回日本手術看護学会年次大会」にご参加の医療従事者向けに作成しております。 </p>
-                    <p>医療従事者以外の閲覧、またはお問い合わせの受け付けは致しかねますのでご了承ください。 </p>
-                </div>
-
-
                 <div className="description">
                     <p>術中の皮膚保護にどの様に取り組んでおられますでしょうか？</p>
+
                     <p>昨今、術中における皮膚保護が大きく見直されてきております。</p>
                     <p>関連の資料をお送りさせて頂きますので、下記のフォームよりお申込み下さい。</p>
                 </div>

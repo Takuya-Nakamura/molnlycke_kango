@@ -22,6 +22,23 @@
   height: 55px;
 }
 
+.container{
+  width: 100%;
+  height: 100%;
+}
+
+.modal_wrapper{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  width: 100%;
+  z-index: 10;
+
+}
+
 main{
   display: block;
 }
@@ -31,6 +48,13 @@ main{
   margin: 0 auto;
   padding: 0px 10px 10px;
 
+
+
+  .target-notice{
+    color:#aaa;
+    font-size: 0.8rem;
+    margin-bottom: 30px;
+  }
 
   .product-description {
     // border:1px solid ;
@@ -349,3 +373,72 @@ footer{
     width: 30%;
   }
 }
+
+
+// closebutton
+/* ここから下がボタンのCSS　*/
+.close-btn {
+  
+  display: block;
+  margin: 10px auto;
+  width: 100px;
+  text-align: center;  color:white;
+
+  font-size: 16px;
+  background-color: #009c14;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: .4s;
+  border: 1px solid #009c14;
+}
+
+.close-btn:hover {
+  background-color: white;
+  color: #009c14;
+  border: 1px solid #009c14;
+}
+.close-position{
+  // position: absolute;
+  // top:0px;
+  // right:0px;
+  // z-index: 15;
+
+}
+
+// .full-screen{
+//   position: relative;
+// }
+
+/* 円 */
+// .close {
+// 	font-size: 30px;
+// 	position: relative;
+// 	width: 1.4em;
+// 	height: 1.4em;
+// 	border: 0.1em solid red;
+// 	border-radius: 100%;
+// }
+// /* 左 */
+// .close::before {
+// 	position: absolute;
+// 	top: 0.2em;
+// 	left: 0.6em;
+// 	width: 0.2em;
+// 	height: 1em;
+// 	content: "";
+// 	background-color: red;
+// 	transform: rotate(45deg);
+// }
+// /* 右 */
+// .close::after {
+// 	position: absolute;
+// 	top: 0.6em;
+// 	left: 0.2em;
+// 	width: 1em;
+// 	height: 0.2em;
+// 	content: "";
+// 	background-color: red;
+// 	transform: rotate(225deg);
+// }

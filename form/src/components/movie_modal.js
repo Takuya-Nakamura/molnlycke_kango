@@ -10,32 +10,31 @@ export default class MoveiModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: this.props.open
+            open: this.props.open,
+            onClickClose: this.props.onClickClose,
         }
     }
 
-    componentDidMount = () => {
-        setTimeout(this.modalClose, 3500) //1秒後に閉じる
-    }
-
-    modalClose = () => {
-        this.setState({ open: false })
-    };
-
     render() {
-        const { open } = this.state
+        const { open, onClickClose } = this.state
         return (
-            <Dialog
-                open={open}
-                maxWidth={'md'}
-            >
-                <DialogTitle >
-                    <video id="vid" src="./images/movie.mp4" autoplay="true" muted="muted"></video>
-                </DialogTitle>
-                <DialogActions>
-                    <div className="btn" onClick={() => this.modalClose()} color="primary">閉じる</div>
-                </DialogActions>
-            </Dialog>
-        );
+            <div className='movie-wrapper'>
+                <video clssName="start-movie" id="vid" src="./images/wondcare_no_sound.mp4" autoplay="true" muted="muted"></video>
+                <div class="close-btn close-position" onClick={onClickClose}>スキップ ＞</div>
+            </div>
+        )
+        // return (
+        //     <Dialog
+        //         open={open}
+        //         maxWidth={'md'}
+        //     >
+        //         <DialogTitle >
+        //             <video id="vid" src="./images/movie.mp4" autoplay="true" muted="muted"></video>
+        //         </DialogTitle>
+        //         <DialogActions>
+        //             <div className="btn" onClick={() => this.modalClose()} color="primary">閉じる</div>
+        //         </DialogActions>
+        //     </Dialog>
+        // );
     }
 }
