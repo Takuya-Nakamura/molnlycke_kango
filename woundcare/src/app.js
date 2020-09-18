@@ -31,7 +31,7 @@ export class Page extends React.Component {
         var { open } = this.state
 
         var modal_style = {
-            // transition: "1s",
+            // // transition: "1s",
             opacity: open ? 1 : 0,
         }
 
@@ -41,20 +41,29 @@ export class Page extends React.Component {
         }
 
         return (
-            <div class="container">
+            <div className="container">
                 {/* <Header /> */}
+
+
                 <div className="modal_wrapper" style={modal_style}>
-                    <MoveiModal
-                        open={open}
-                        onClickClose={this.onClickClose}
-                    />
+                    {open &&
+                        <MoveiModal
+                            open={open}
+                            onClickClose={this.onClickClose}
+                        />
+                    }
                 </div>
-                <div className="contents_wrapper" style={contents_style}>
-                    <div className="key-visual__area">
-                        <KeyVisual />
-                    </div>
-                    <Main />
-                    <Footer />
+
+                <div style={contents_style}>
+                    {!open &&
+                        <div className="contents_wrapper" >
+                            <div className="key-visual__area">
+                                <KeyVisual />
+                            </div>
+                            <Main />
+                            <Footer />
+                        </div>
+                    }
                 </div>
             </div>
         );
