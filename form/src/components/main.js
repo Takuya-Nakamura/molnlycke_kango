@@ -112,7 +112,7 @@ export default class Main extends React.Component {
         console.log("■post this.state")
         console.log(this.state)
 
-        axios.post('/api/public/', {
+        axios.post('/jona/api/public/', {
             ...this.state
         })
             .then((res) => {
