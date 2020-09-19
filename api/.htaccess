@@ -1,2 +1,2 @@
-AddHandler x-httpd-php71 .php
+AddHandler x-httpd-php73 .php
 Options +SymLinksIfOwnerMatch
