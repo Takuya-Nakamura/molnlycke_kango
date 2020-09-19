@@ -31,9 +31,9 @@ class SampleMail extends Mailable
     {
         // return $this->view('view.name');
         return $this
-        ->from('hoge@exapmle.com') // Á÷¿®¸µ
-        ->subject('¥Æ¥¹¥ÈÁ÷¿®') // ¥á¡¼¥ë¥¿¥¤¥È¥ë
-        ->view('mail.send') // ¥á¡¼¥ëËÜÊ¸¤Î¥Æ¥ó¥×¥ì¡¼¥È
+        ->from('hoge@exapmle.com') 
+        ->subject('ãƒ†ã‚¹ãƒˆãƒ¡ãƒ¼ãƒ«ã§ã™') 
+        ->view('mail.send') 
         ->with(['content' => $this->content]);
     }
 }

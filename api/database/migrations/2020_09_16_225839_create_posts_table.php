@@ -17,9 +17,19 @@ class CreatePostsTable extends Migration
             // $table->id();
             // $table->timestamps();
             $table->increments('id');
-            $table->string('title');
-            $table->string('body');
-            $table->timestamps();            
+            $table->integer('detail_explain');
+            $table->integer('document_send');
+            $table->string('name');
+            $table->string('email');
+            $table->string('tel');
+            $table->string('facility');
+            $table->string('department');
+            $table->string('zip_code');
+            $table->string('prefecture');
+            $table->string('city');
+            $table->string('adress');
+            $table->boolean('notification');
+            $table->timestamps();
         });
     }
 

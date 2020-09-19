@@ -13,12 +13,13 @@ export class Page extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: true
+            //debug
+            open: false
         }
     }
 
     componentDidMount = () => {
-        setTimeout(this.modalClose, 7000)
+        setTimeout(this.modalClose, 0)
     }
     modalClose = () => {
         this.setState({ open: false })

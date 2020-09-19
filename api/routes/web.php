@@ -14,14 +14,15 @@ use App\Http\Controllers\PostsController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [PostsController::class, 'index']);
 
-Route::get('posts', [PostsController::class, 'index']);
-Route::post('posts_json', [PostsController::class, 'json']);
-Route::post('posts', [PostsController::class, 'store']);
+Route::post('/', [PostsController::class, 'post']);
 
-// Route::get('posts', 'PostController@index');
-// Route::post('posts', 'PostsController@store');
+Route::get('test_index', [PostsController::class, 'index']);
+
+Route::get('posts', [PostsController::class, 'post']);
+
 
