@@ -27,7 +27,7 @@ class CreatePostsTable extends Migration
             $table->string('zip_code');
             $table->string('prefecture');
             $table->string('city');
-            $table->string('adress');
+            $table->string('address');
             $table->boolean('notification');
             $table->timestamps();
         });

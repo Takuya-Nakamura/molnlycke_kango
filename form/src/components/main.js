@@ -3,6 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import IconButton from '@material-ui/core/IconButton';
+
+
 export default class Main extends React.Component {
 
     constructor(props) {
@@ -18,22 +26,68 @@ export default class Main extends React.Component {
             zip_code: '',
             prefecture: '',
             city: '',
-            adress: '',
+            address: '',
             notification: null,
-            policy: null
+            policy: null,
+
+            error_messages: {},
+            show_error_dialog: false,
         }
     }
 
-    /** 
+
+    renderErrorDialog = () => {
+        var { show_error_dialog, error_messages } = this.state
+        return (
+            <Dialog onClose={this.closeErrorDialog} open={show_error_dialog}>
+                <div className='error-dialog'>
+                    <div className={'messages'}>
+                        {Object.values(error_messages).map((msgs) => {
+                            return (msgs.map((msg) => <p>{msg}</p>))
+                        })}
+                    </div>
+                    <button onClick={this.closeErrorDialog} className="btn">閉じる</button>
+                </div>
+            </Dialog>
+        );
+    }
+    closeErrorDialog = () => {
+        this.setState({ show_error_dialog: false })
+    }
+
+    /**
+     * 住所自動入力
+     */
+    complementAddress = () => {
+        console.log("complementAddress")
+        const { AjaxZip3 } = window;
+        AjaxZip3.zip2addr(
+            'zip_code',
+            '',
+            'prefecture',
+            'city',
+            'address'
+        );
+    };
+    onBlurZipcode = () => {
+        console.log("onBlurZipcode")
+        this.setState({
+            prefecture: document.getElementById('prefecture').value,
+            city: document.getElementById('city').value,
+            address: document.getElementById('address').value
+        });
+    };
+
+    /**
      * RifeCycle
-     * 
+     *
     */
     componentDidMount = () => {
         setTimeout(this.modalClose, 7000)
     }
-    /** 
+    /**
      * Action
-     * 
+     *
     */
 
     onClickDetailExplain = (val) => {
@@ -109,36 +163,65 @@ export default class Main extends React.Component {
 
     post = () => {
 
-        console.log("■post this.state")
-        console.log(this.state)
-
-        axios.post('/jona/api/public/', {
-            ...this.state
-        })
-            .then((res) => {
-                console.log("then")
-                console.log(res)
+        if (this.validation()) {
+            axios.post('/api/public/', {
+                ...this.state
             })
-            .catch((res) => {
-                console.log("catch")
-                console.log("err", res.response)
-            })
+                .then((res) => {
+                    console.log("then")
+                    console.log(res)
+                })
+                .catch((res) => {
+                    console.log("catch")
+                    console.log("err", res.response)
+                })
+        }
     }
 
     validation = () => {
+        const {
+            name,
+            email,
+            tel,
+            facility,
+            department,
+            zip_code,
+            prefecture,
+            city,
+            adress,
+            notification,
+        } = this.state
 
+        var msg = [];
+        if (!name) msg['name'] = ["名前が未入力です"]
+        if (!email) msg['email'] = ["電子メールが未入力です"]
+        if (!tel) msg['tel'] = ["電話番号が未入力です"]
+        if (!facility) msg['facility'] = ["施設名が未入力です"]
+        if (!department) msg['department'] = ["部署が未入力です"]
+        if (!zip_code) msg['zip_code'] = ["郵便番号が未入力です"]
+        if (!prefecture) msg['prefecture'] = ["都道府県が未入力です"]
+        if (!city) msg['city'] = ["市区町村が未入力です"]
+        if (!adress) msg['adress'] = ["番地が未入力です"]
+        if (!notification) msg['notification'] = ["案内の希望が未入力です"]
+
+        if (msg.keys().length == 0) return true;
+        this.setState({
+            error_messages: msg,
+            show_error_dialog: true
+        })
     }
-    /** 
+
+
+    /**
  * Render
- * 
+ *
 */
     render() {
         console.log(this.state)
         return (
             <main className="main">
-                <div onClick={this.post}>
-                    test
-                </div>
+                {this.renderErrorDialog()}
+
                 <div className="title">
                     <h1>第34回日本手術看護学会年次大会 Web開催 専⽤サイト</h1>
                 </div>
@@ -147,7 +230,6 @@ export default class Main extends React.Component {
                     <p>昨今、術中における皮膚保護が大きく見直されてきております。</p>
                     <p>関連の資料をお送りさせて頂きますので、下記のフォームよりお申込み下さい。</p>
                 </div>
-
 
                 <div className="product-description" >
                     製品説明
@@ -216,13 +298,16 @@ export default class Main extends React.Component {
                         </div>
 
 
+
+
                         <div className="form-item">
                             <label className="form-label">ご住所<span className="require">＊</span></label>
-                            <input className="form-input" type='text' maxLength="7" name='zip-code' placeholder="郵便番号(数字のみでご入力ください)＊" onChange={this.onChangezip_code} value={this.state.zip_code} />
+                            <input className="form-input" type='text' maxLength="7" name='zip_code' placeholder="郵便番号(数字のみでご入力ください)＊" onChange={this.onChangezip_code} value={this.state.zip_code} onKeyUp={this.complementAddress}
+                                onBlur={this.onBlurZipcode} />
 
-                            <input className="form-input" type='text' name='prefecture' required placeholder="都道府県＊" onChange={this.onChangePrefecture} value={this.state.prefecture} />
-                            <input className="form-input" type='text' name='city' required placeholder="市区町村＊" onChange={this.onChangeCity} value={this.state.city} />
-                            <input className="form-input" type='text' name='address' required placeholder="番地＊" onChange={this.onChangeAdress} value={this.state.adress} />
+                            <input className="form-input" type='text' name='prefecture' id='prefecture' required placeholder="都道府県＊" onChange={this.onChangePrefecture} value={this.state.prefecture} />
+                            <input className="form-input" type='text' name='city' id='city' required placeholder="市区町村＊" onChange={this.onChangeCity} value={this.state.city} />
+                            <input className="form-input" type='text' name='address' id='address' required placeholder="番地＊" onChange={this.onChangeAdress} value={this.state.address} />
                         </div>
 
                         <div className="form-item">
@@ -263,6 +348,8 @@ export default class Main extends React.Component {
 
                     </form>
                 </div>
+
+
             </main>
         );
     }
