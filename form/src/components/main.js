@@ -243,7 +243,7 @@ export default class Main extends React.Component {
                     <div className={'messages'}>
                         アンケートのご回答ありがとうございました。
                     </div>
-                    <button onClick={this.closeCompleteDialog} className="btn">閉じる2</button>
+                    <button onClick={this.closeCompleteDialog} className="btn">閉じる</button>
                 </div>
             </Dialog>
         );
