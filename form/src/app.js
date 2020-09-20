@@ -19,7 +19,7 @@ export class Page extends React.Component {
     }
 
     componentDidMount = () => {
-        setTimeout(this.modalClose, 0)
+        setTimeout(this.modalClose, 7000)
     }
     modalClose = () => {
         this.setState({ open: false })

@@ -66,7 +66,6 @@ export default class Main extends React.Component {
      *
     */
     componentDidMount = () => {
-        setTimeout(this.modalClose, 7000)
     }
     /**
      * Action
