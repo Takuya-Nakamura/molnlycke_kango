@@ -1,2 +1,4 @@
 AddHandler x-httpd-php73 .php
 Options +SymLinksIfOwnerMatch
+
+

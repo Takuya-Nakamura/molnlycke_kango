@@ -73,7 +73,6 @@ export default class Main extends React.Component {
     */
 
     onClickDetailExplain = (val) => {
-        console.log("onClickDetailExplain")
         this.setState({ detail_explain: val })
     }
     isCheckedDetailExplain = (val) => {
@@ -87,7 +86,6 @@ export default class Main extends React.Component {
     }
 
     isClickDocumentSend = () => {
-        console.log("isClickDocumentSend")
         return this.state.document_send == 1
     }
 
@@ -265,7 +263,9 @@ export default class Main extends React.Component {
                 </div>
 
                 <div className="product-description" >
-                    製品説明
+
+                    <img className="product_image" src="./images/product1.png"></img>
+                    <img className="product_image" src="./images/product2.png"></img>
                 </div>
 
                 <div className="form">

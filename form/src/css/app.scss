@@ -58,8 +58,8 @@ main{
 
   .product-description {
     // border:1px solid ;
-    height: 300px;
-    background-color: #dfdfdf;
+    // height: 300px;
+    // background-color: #dfdfdf;
     margin-bottom: 50px;
   }
 
@@ -412,3 +412,11 @@ footer{
   }
 }
 
+
+/*product image*/
+
+.product-description{
+  .product_image{
+    width: 100%;
+  }
+}
