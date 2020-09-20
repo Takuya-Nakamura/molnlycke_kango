@@ -10,50 +10,33 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 
-
+var initValues = {
+    detail_explain: null,
+    document_send: null,
+    name: '',
+    email: '',
+    tel: '',
+    facility: '',
+    department: '',
+    zip_code: '',
+    prefecture: '',
+    city: '',
+    address: '',
+    notification: null,
+    policy: null,
+}
 export default class Main extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            detail_explain: null,
-            document_send: null,
-            name: '',
-            email: '',
-            tel: '',
-            facility: '',
-            department: '',
-            zip_code: '',
-            prefecture: '',
-            city: '',
-            address: '',
-            notification: null,
-            policy: null,
-
+            ...initValues,
             error_messages: {},
             show_error_dialog: false,
+            show_complete_dialog: true,
         }
     }
 
-
-    renderErrorDialog = () => {
-        var { show_error_dialog, error_messages } = this.state
-        return (
-            <Dialog onClose={this.closeErrorDialog} open={show_error_dialog}>
-                <div className='error-dialog'>
-                    <div className={'messages'}>
-                        {Object.values(error_messages).map((msgs) => {
-                            return (msgs.map((msg) => <p>{msg}</p>))
-                        })}
-                    </div>
-                    <button onClick={this.closeErrorDialog} className="btn">閉じる</button>
-                </div>
-            </Dialog>
-        );
-    }
-    closeErrorDialog = () => {
-        this.setState({ show_error_dialog: false })
-    }
 
     /**
      * 住所自動入力
@@ -143,7 +126,7 @@ export default class Main extends React.Component {
     }
 
     onChangeAdress = (e) => {
-        this.setState({ adress: e.target.value })
+        this.setState({ address: e.target.value })
     }
 
     clickNotification = (val) => {
@@ -168,12 +151,13 @@ export default class Main extends React.Component {
                 ...this.state
             })
                 .then((res) => {
-                    console.log("then")
-                    console.log(res)
+                    console.log("success")
+                    this.setState({ show_complete_dialog: true })
+                    this.clearForm()
                 })
                 .catch((res) => {
-                    console.log("catch")
-                    console.log("err", res.response)
+                    console.log("error")
+                    this.setState({ error_messages: res.data })
                 })
         }
     }
@@ -211,17 +195,60 @@ export default class Main extends React.Component {
         })
     }
 
+    closeErrorDialog = () => {
+        this.setState({ show_error_dialog: false })
+    }
 
+    closeCompleteDialog = () => {
+        this.setState({ show_complete_dialog: false })
+    }
+
+    clearForm = () => {
+        this.setState(initValues)
+    }
     /**
- * Render
- *
-*/
+     * Render
+    *
+    */
+
+    renderErrorDialog = () => {
+        var { show_error_dialog, error_messages } = this.state
+        return (
+            <Dialog onClose={this.closeErrorDialog} open={show_error_dialog}>
+                <div className='error-dialog'>
+                    <div className={'messages'}>
+                        {Object.values(error_messages).map((msgs) => {
+                            return (msgs.map((msg) => <p>{msg}</p>))
+                        })}
+                    </div>
+                    <button onClick={this.closeErrorDialog} className="btn">閉じる</button>
+                </div>
+            </Dialog>
+        );
+    }
+
+
+    renderCompleteDialog = () => {
+        var { show_complete_dialog } = this.state
+        return (
+            <Dialog onClose={this.closeCompleteDialog} open={show_complete_dialog}>
+                <div className='error-dialog'>
+                    <div className={'messages'}>
+                        アンケートのご回答ありがとうございました。
+                    </div>
+                    <button onClick={this.closeCompleteDialog} className="btn">閉じる</button>
+                </div>
+            </Dialog>
+        );
+    }
+
+
     render() {
         console.log(this.state)
         return (
             <main className="main">
                 {this.renderErrorDialog()}
-
+                {this.renderCompleteDialog()}
                 <div className="title">
                     <h1>第34回日本手術看護学会年次大会 Web開催 専⽤サイト</h1>
                 </div>
