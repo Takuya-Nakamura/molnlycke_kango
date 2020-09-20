@@ -9,6 +9,6 @@
 都道府県:{{$data->prefecture}}
 市区町村:{{$data->city}}
 番地:{{$data->address}}
-通知の同意:{{$data['notification']}}
+通知の同意:{{$data->notification()}}
 
 以上

@@ -20,11 +20,11 @@ class Post extends Model
     }
 
     public function document_send (){
-        return  $this->document_send ==1 ? "希望する" : "いいえ";
+        return  $this->document_send == 1 ? "希望する" : "いいえ";
     }
     
     public function notification (){
-        return  $this->notification ==1 ? "はい" : "いいえ";
+        return  $this->notification == 1 ? "はい" : "いいえ";
     }
 
 

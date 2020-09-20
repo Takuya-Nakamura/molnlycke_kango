@@ -276,16 +276,16 @@ export default class Main extends React.Component {
                                 メピレックス ボーダー プロテクトについて、さらに詳しくご説明いたします。<br />
                                 フォームのご希望欄にチェックを⼊れていただき、必要事項を⼊⼒の上、送信ボタンをクリックしてください。後⽇、担当者よりご連絡いたします。
                             </label>
-                            <div className="form-radio-wrap" onClick={() => this.onClickDetailExplain(1)}>
-                                <input type="radio" name="detail_explain1" id="detail_explain1-1" checked={this.isCheckedDetailExplain(1)} />
+                            <div className="form-radio-wrap" onClick={() => this.onClickDetailExplain(0)}>
+                                <input type="radio" name="detail_explain1" id="detail_explain1-1" checked={this.isCheckedDetailExplain(0)} />
                                 <label >説明会希望</label>
                             </div>
-                            <div className="form-radio-wrap" onClick={() => this.onClickDetailExplain(2)}>
-                                <input type="radio" name="detail_explain" id="detail_explain1-2" checked={this.isCheckedDetailExplain(2)} />
+                            <div className="form-radio-wrap" onClick={() => this.onClickDetailExplain(1)}>
+                                <input type="radio" name="detail_explain" id="detail_explain1-2" checked={this.isCheckedDetailExplain(1)} />
                                 <label >デモ希望</label>
                             </div>
-                            <div className="form-radio-wrap" onClick={() => this.onClickDetailExplain(3)}>
-                                <input type="radio" name="detail_explain1" id="detail_explain1-3" checked={this.isCheckedDetailExplain(3)} />
+                            <div className="form-radio-wrap" onClick={() => this.onClickDetailExplain(2)}>
+                                <input type="radio" name="detail_explain1" id="detail_explain1-3" checked={this.isCheckedDetailExplain(2)} />
                                 <label >製品について詳しく聞きたい</label>
                             </div>
                         </div>
