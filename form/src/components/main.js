@@ -147,7 +147,9 @@ export default class Main extends React.Component {
     post = () => {
 
         if (this.validation()) {
-            axios.post('/api/public/', {
+            // 検証
+            axios.post('/jona/api/public/', {
+                // local axios.post('/api/public/', {
                 ...this.state
             })
                 .then((res) => {
@@ -385,4 +387,25 @@ export default class Main extends React.Component {
             </main>
         );
     }
-}    
+}
+
+
+var json = {
+    "address": "1-20-21",
+    "city": "川崎市幸区北加瀬",
+    "department": "部署名",
+    "detail_explain": 1,
+    "document_send": 1,
+    "email": "nakamura0803@gmail.com",
+    "error_messages": [],
+    "facility": "施設名",
+    "name": "中村拓也",
+    "notification": 1,
+    "policy": true,
+    "prefecture": "神奈川県",
+    "show_complete_dialog": false,
+    "show_error_dialog": false,
+    "tel": "09070776680",
+    "zip_code": "2120057",
+}
+

@@ -13,7 +13,7 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $res = Mail::to($request['email'])->send(new UserMail());
+        $res = Mail::to("nakamura0803@gmail.com")->send(new UserMail());
         return response()->json(['page' => 'index']);
     }
 
@@ -43,6 +43,7 @@ class PostsController extends Controller
 
         $res = ob_get_clean();
         mb_convert_variables('SJIS', 'UTF-8', $res);
+
         // HTTPヘッダ
         header("Content-Type: application/octet-stream");
         header('Content-Disposition: attachment; filename=list.csv');
