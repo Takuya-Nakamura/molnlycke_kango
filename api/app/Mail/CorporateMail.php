@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SampleMail extends Mailable
+class CorporateMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,11 +29,12 @@ class SampleMail extends Mailable
      */
     public function build()
     {
-        // return $this->view('view.name');
         return $this
-        ->from('hoge@exapmle.com') 
-        ->subject('テストメールです') 
-        ->view('mail.send') 
-        ->with(['content' => $this->content]);
+        ->from('no-reply@molnlycke.com') 
+        ->subject('第34回日本手術看護学年次大会アンケート回答') 
+        ->view('mail.corporate')
+        ->with(['data' => $this->content]);
     }
 }
+
+

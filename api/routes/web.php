@@ -25,4 +25,13 @@ Route::get('test_index', [PostsController::class, 'index']);
 
 Route::get('posts', [PostsController::class, 'post']);
 
+Route::get('/csv', [PostsController::class, 'csv']);
 
+
+Route::group(['middleware' => 'basicauth'], function() {
+    //ここにBasic認証をかけたいルーティングの設定を記述して下さい
+    //例
+    Route::get('/csv', [PostsController::class, 'csv']);
+
+    // Route::get('/', 'PageController@home')->name('page.home');
+});

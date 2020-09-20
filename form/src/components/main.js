@@ -33,7 +33,7 @@ export default class Main extends React.Component {
             ...initValues,
             error_messages: {},
             show_error_dialog: false,
-            show_complete_dialog: true,
+            show_complete_dialog: false,
         }
     }
 
@@ -49,7 +49,7 @@ export default class Main extends React.Component {
             '',
             'prefecture',
             'city',
-            'address'
+            // 'address'
         );
     };
     onBlurZipcode = () => {
@@ -57,7 +57,7 @@ export default class Main extends React.Component {
         this.setState({
             prefecture: document.getElementById('prefecture').value,
             city: document.getElementById('city').value,
-            address: document.getElementById('address').value
+            // address: document.getElementById('address').value
         });
     };
 
@@ -125,7 +125,7 @@ export default class Main extends React.Component {
         this.setState({ city: e.target.value })
     }
 
-    onChangeAdress = (e) => {
+    onChangeAddress = (e) => {
         this.setState({ address: e.target.value })
     }
 
@@ -156,8 +156,9 @@ export default class Main extends React.Component {
                     this.clearForm()
                 })
                 .catch((res) => {
-                    console.log("error")
-                    this.setState({ error_messages: res.data })
+                    console.log("error", res)
+                    console.log("res.data", res.data)
+                    // this.setState({ error_messages: res.data })
                 })
         }
     }
@@ -172,7 +173,7 @@ export default class Main extends React.Component {
             zip_code,
             prefecture,
             city,
-            adress,
+            address,
             notification,
         } = this.state
 
@@ -185,10 +186,13 @@ export default class Main extends React.Component {
         if (!zip_code) msg['zip_code'] = ["郵便番号が未入力です"]
         if (!prefecture) msg['prefecture'] = ["都道府県が未入力です"]
         if (!city) msg['city'] = ["市区町村が未入力です"]
-        if (!adress) msg['adress'] = ["番地が未入力です"]
+        if (!address) msg['address'] = ["番地が未入力です"]
         if (!notification) msg['notification'] = ["案内の希望が未入力です"]
 
-        if (msg.keys().length == 0) return true;
+        console.log("msg", msg)
+        console.log("msg.keys()", msg.keys())
+        if (Object.keys(msg) == 0) return true;
+        console.log("after")
         this.setState({
             error_messages: msg,
             show_error_dialog: true
@@ -233,10 +237,11 @@ export default class Main extends React.Component {
         return (
             <Dialog onClose={this.closeCompleteDialog} open={show_complete_dialog}>
                 <div className='error-dialog'>
+
                     <div className={'messages'}>
                         アンケートのご回答ありがとうございました。
                     </div>
-                    <button onClick={this.closeCompleteDialog} className="btn">閉じる</button>
+                    <button onClick={this.closeCompleteDialog} className="btn">閉じる2</button>
                 </div>
             </Dialog>
         );
@@ -334,7 +339,7 @@ export default class Main extends React.Component {
 
                             <input className="form-input" type='text' name='prefecture' id='prefecture' required placeholder="都道府県＊" onChange={this.onChangePrefecture} value={this.state.prefecture} />
                             <input className="form-input" type='text' name='city' id='city' required placeholder="市区町村＊" onChange={this.onChangeCity} value={this.state.city} />
-                            <input className="form-input" type='text' name='address' id='address' required placeholder="番地＊" onChange={this.onChangeAdress} value={this.state.address} />
+                            <input className="form-input" type='text' name='address' id='address' required placeholder="番地＊" onChange={this.onChangeAddress} value={this.state.address} />
                         </div>
 
                         <div className="form-item">
