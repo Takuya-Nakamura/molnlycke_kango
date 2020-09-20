@@ -15,7 +15,7 @@ class Post extends Model
         switch($this->detail_explain){
             case 0:return "説明会希望";
             case 1:return "デモ希望";
-            case 2:return "製品について詳しく聞きたい";
+            case 2:return "製品について詳しく聞きたい"; 
         }
     }
 

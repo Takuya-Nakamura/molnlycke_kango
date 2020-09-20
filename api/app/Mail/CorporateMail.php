@@ -32,7 +32,8 @@ class CorporateMail extends Mailable
         return $this
         ->from('no-reply@molnlycke.com') 
         ->subject('第34回日本手術看護学年次大会アンケート回答') 
-        ->view('mail.corporate')
+        ->text('mail.corporate')
+        // ->view('mail.corporate')
         ->with(['data' => $this->content]);
     }
 }

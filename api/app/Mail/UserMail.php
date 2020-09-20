@@ -33,7 +33,9 @@ class UserMail extends Mailable
         return $this
         ->from('no-reply@molnlycke.com') 
         ->subject('メンリッケヘルスケア アンケートにご協力くださいましてありがとうございました') 
-        ->view('mail.user');
+        // ->view('mail.user');
+        ->text('mail.user');
+        
         // ->with(['content' => $this->content]);
     }
 }

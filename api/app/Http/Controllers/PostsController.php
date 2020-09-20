@@ -30,13 +30,12 @@ class PostsController extends Controller
             return $post;
         });
 
-        $head = ['id', '詳細説明', '資料送付希望', '名前', 'メール', '電話', '施設名', '部署名', '郵便番号', '都道府県', '市区町村', '番地', '通知を希望する'];
+        $head = ['id', '詳細説明', '資料送付希望', '名前', 'メール', '電話', '施設名', '部署名', '郵便番号', '都道府県', '市区町村', '番地', '通知を希望する', '作成', '更新'];
 
         // 書き込み用ファイルを開く
         $data = $data->toArray();
         ob_start();
         $f = fopen('php://output', 'w');
-        mb_convert_variables('SJIS', 'UTF-8', $head);
         fputcsv($f, $head);
         foreach ($data as $row) {fputcsv($f, $row);}
         fclose($f);
