@@ -14,7 +14,7 @@ export class Page extends React.Component {
         super(props);
         this.state = {
             //debug
-            open: false
+            open: true
         }
     }
 
