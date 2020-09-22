@@ -220,8 +220,8 @@ export default class Main extends React.Component {
             <Dialog onClose={this.closeErrorDialog} open={show_error_dialog}>
                 <div className='error-dialog'>
                     <div className={'messages'}>
-                        {Object.values(error_messages).map((msgs) => {
-                            return (msgs.map((msg) => <p>{msg}</p>))
+                        {Object.keys(error_messages).map((key) => {
+                            return (error_messages[key].map((msg) => <p>{msg}</p>))
                         })}
                     </div>
                     <button onClick={this.closeErrorDialog} className="btn">閉じる</button>
