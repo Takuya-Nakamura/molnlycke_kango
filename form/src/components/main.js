@@ -29,30 +29,12 @@ export default class Main extends React.Component {
 
     constructor(props) {
         super(props);
-        this.initFunction()
+
         this.state = {
             ...initValues,
             error_messages: {},
             show_error_dialog: false,
             show_complete_dialog: false,
-        }
-    }
-
-
-    /**
-     * ie11
-     */
-    initFunction = () => {
-        if (!Object.keys) {
-            Object.keys = function (obj) {
-                var keys = [];
-                for (var i in obj) {
-                    if (obj.hasOwnProperty(i)) {
-                        keys.push(i);
-                    }
-                }
-                return keys;
-            };
         }
     }
 
@@ -206,14 +188,19 @@ export default class Main extends React.Component {
         if (!address) msg['address'] = ["番地が未入力です"]
         if (!notification) msg['notification'] = ["案内の希望が未入力です"]
 
-        console.log("msg", msg)
-        console.log("msg.keys()", msg.keys())
-        if (Object.keys(msg) == 0) return true;
-        console.log("after")
+        // if (Object.keys(msg) == 0) return true;
+        if (this.objectKeyCount(msg) == 0) return true;
         this.setState({
             error_messages: msg,
             show_error_dialog: true
         })
+    }
+    objectKeyCount = (object) => {
+        var count = 0;
+        for (var key in object) {
+            count++;
+        }
+        return count;
     }
 
     closeErrorDialog = () => {
@@ -231,6 +218,7 @@ export default class Main extends React.Component {
      * Render
     *
     */
+
 
     renderErrorDialog = () => {
         var { show_error_dialog, error_messages } = this.state
