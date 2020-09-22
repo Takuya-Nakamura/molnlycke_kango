@@ -234,14 +234,22 @@ export default class Main extends React.Component {
 
     renderErrorDialog = () => {
         var { show_error_dialog, error_messages } = this.state
+
+        var messages = []
+        for (var key in error_messages) {
+            messages.push(error_messages[key].map(msg => msg));
+        }
+
         return (
             <Dialog onClose={this.closeErrorDialog} open={show_error_dialog}>
                 <div className='error-dialog'>
                     <div className={'messages'}>
 
-                        {Object.keys(error_messages).map((key) => {
+                        {/* {Object.keys(error_messages).map((key) => {
                             return (error_messages[key].map((msg) => <p>{msg}</p>))
-                        })}
+                        })} */}
+
+                        {messages.map(msg => <p>{msg}</p>)}
 
                     </div>
                     <button onClick={this.closeErrorDialog} className="btn">閉じる</button>
