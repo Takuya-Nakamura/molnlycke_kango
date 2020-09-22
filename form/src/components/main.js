@@ -29,6 +29,7 @@ export default class Main extends React.Component {
 
     constructor(props) {
         super(props);
+        this.initFunction()
         this.state = {
             ...initValues,
             error_messages: {},
@@ -37,6 +38,23 @@ export default class Main extends React.Component {
         }
     }
 
+
+    /**
+     * ie11
+     */
+    initFunction = () => {
+        if (!Object.keys) {
+            Object.keys = function (obj) {
+                var keys = [];
+                for (var i in obj) {
+                    if (obj.hasOwnProperty(i)) {
+                        keys.push(i);
+                    }
+                }
+                return keys;
+            };
+        }
+    }
 
     /**
      * 住所自動入力
@@ -220,9 +238,11 @@ export default class Main extends React.Component {
             <Dialog onClose={this.closeErrorDialog} open={show_error_dialog}>
                 <div className='error-dialog'>
                     <div className={'messages'}>
+
                         {Object.keys(error_messages).map((key) => {
                             return (error_messages[key].map((msg) => <p>{msg}</p>))
                         })}
+
                     </div>
                     <button onClick={this.closeErrorDialog} className="btn">閉じる</button>
                 </div>
