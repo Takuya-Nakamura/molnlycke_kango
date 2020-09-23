@@ -149,12 +149,12 @@ export default class Main extends React.Component {
                 // local axios.post('/api/public/', {
                 ...this.state
             })
-                .then(function (res) {
+                .then((res) => {
                     console.log("success")
                     this.setState({ show_complete_dialog: true })
                     this.clearForm()
                 })
-                .catch(function (res) {
+                .catch((res) => {
                     console.log("error", res)
                     console.log("res.data", res.data)
                     // this.setState({ error_messages: res.data })
