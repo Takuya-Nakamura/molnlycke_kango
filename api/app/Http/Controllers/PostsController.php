@@ -13,8 +13,8 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $res = Mail::to("nakamura0803@gmail.com")->send(new UserMail());
-        return response()->json(['page' => 'index']);
+        // $res = Mail::to("nakamura0803@gmail.com")->send(new UserMail());
+        // return response()->json(['page' => 'index']);
     }
 
     public function csv()
@@ -84,7 +84,7 @@ class PostsController extends Controller
 
         //メール送信
         $res = Mail::to($request['email'])->send(new UserMail());
-        $res = Mail::to("nakamura0803@gmail.com")->send(new CorporateMail($post));
+        $res = Mail::to("info.jp@molnlycke.com")->send(new CorporateMail($post));
         return response()->json(['message' => 'success']);
     }
 }
