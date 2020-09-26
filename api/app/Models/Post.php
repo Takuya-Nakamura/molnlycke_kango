@@ -13,7 +13,7 @@ class Post extends Model
 
     public function detail_explain (){
         switch($this->detail_explain){
-            case null : "未選択";
+            case null : return "未選択";
             case 0:return "説明会希望";
             case 1:return "デモ希望";
             case 2:return "製品について詳しく聞きたい"; 
@@ -22,7 +22,7 @@ class Post extends Model
 
     public function document_send (){
         switch($this->document_send){
-            case null : "未選択";
+            case null : return "未選択";
             case 0:return "いいえ";
             case 1:return "希望する";
         }
