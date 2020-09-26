@@ -12,19 +12,19 @@ class Post extends Model
 
 
     public function detail_explain (){
-        switch($this->detail_explain){
-            case null : return "未選択";
-            case 0:return "説明会希望";
-            case 1:return "デモ希望";
-            case 2:return "製品について詳しく聞きたい"; 
+        switch(true){
+            case $this->detail_explain === null : return "未選択";
+            case $this->detail_explain === 0:return "説明会希望";
+            case $this->detail_explain === 1:return "デモ希望";
+            case $this->detail_explain === 2:return "製品について詳しく聞きたい"; 
         }
     }
 
     public function document_send (){
-        switch($this->document_send){
-            case null : return "未選択";
-            case 0:return "いいえ";
-            case 1:return "希望する";
+        switch(true){
+            case $this->document_send === null : return "未選択";
+            case $this->document_send === 0:return "いいえ";
+            case $this->document_send === 1:return "希望する";
         }
     }
     
