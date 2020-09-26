@@ -17,8 +17,8 @@ class CreatePostsTable extends Migration
             // $table->id();
             // $table->timestamps();
             $table->increments('id');
-            $table->integer('detail_explain');
-            $table->integer('document_send');
+            $table->integer('detail_explain')->nullable();
+            $table->integer('document_send')->nullable();
             $table->string('name');
             $table->string('email');
             $table->string('tel');
