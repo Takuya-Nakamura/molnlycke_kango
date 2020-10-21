@@ -276,6 +276,8 @@ export default class Main extends React.Component {
                     <p>術中の皮膚保護にどの様に取り組んでおられますでしょうか？</p>
                     <p>昨今、術中における皮膚保護が大きく見直されてきております。</p>
                     <p>関連の資料をお送りさせて頂きますので、下記のフォームよりお申込み下さい。</p>
+                    <p>資料をご希望頂いた皆さまには、特製ロゴ入りトートバッグを差し上げます。</p>
+
                 </div>
 
                 <div className="product-description" >
@@ -308,7 +310,7 @@ export default class Main extends React.Component {
                         <div className="form-item">
                             <label className="form-label">
                                 メピレックス ボーダー プロテクトについて、さらに詳しい資料をお送りします。
-                                資料送付のご希望を頂いた方にはギミックを差し上げます。
+                                資料送付のご希望を頂いた方には特製ロゴ入りトートバッグを差し上げます。
                             </label>
                             <div className="form-radio-wrap" onClick={this.onClickDocumentSend}>
                                 <input type="checkbox" name="document_send" id="document_send" checked={this.isClickDocumentSend()} />
@@ -373,7 +375,7 @@ export default class Main extends React.Component {
                                 </span>
 
                                 <p className="submit-note" >
-                                    ※いいえを選択された場合でも、資料、ギミック発送のご連絡のため、ご希望されている場合はアポイント取得のためにE-mailでご連絡申し上げる場合がございます。
+                                    ※いいえを選択された場合でも、資料、ギミック発送のご連絡のため、E-mailでご連絡申し上げる場合がございます。
                                 </p>
 
                             </div>
@@ -398,29 +400,9 @@ export default class Main extends React.Component {
                     </form>
                 </div>
 
-
             </main>
         );
     }
 }
 
-
-var json = {
-    "address": "1-20-21",
-    "city": "川崎市幸区北加瀬",
-    "department": "部署名",
-    "detail_explain": 1,
-    "document_send": 1,
-    "email": "nakamura0803@gmail.com",
-    "error_messages": [],
-    "facility": "施設名",
-    "name": "中村拓也",
-    "notification": 1,
-    "policy": true,
-    "prefecture": "神奈川県",
-    "show_complete_dialog": false,
-    "show_error_dialog": false,
-    "tel": "09070776680",
-    "zip_code": "2120057",
-}
 
