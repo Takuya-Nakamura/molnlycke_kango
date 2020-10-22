@@ -394,7 +394,7 @@ export default class Main extends React.Component {
                                 </span>
 
                                 <p className="submit-note" >
-                                    ※いいえを選択された場合でも、資料、ギミック発送のご連絡のため、E-mailでご連絡申し上げる場合がございます。
+                                    ※いいえを選択された場合でも、資料、ギミック発送のご連絡のためE-mailでご連絡申し上げる場合がございます。
                                 </p>
 
                             </div>
