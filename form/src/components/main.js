@@ -15,16 +15,29 @@ var initValues = {
     document_send: null,
     name: '',
     email: '',
-    tel: '',
-    facility: '',
-    department: '',
+    job: '1',
     zip_code: '',
     prefecture: '',
     city: '',
     address: '',
+    facility: '',
+    department: '',
+
     notification: null,
     policy: null,
+
 }
+
+var jobs = [
+    { id: 1, label: "看護師" },
+    { id: 2, label: "皮膚排泄ケア認定看護師" },
+    { id: 3, label: "医師" },
+    { id: 4, label: "薬剤師" },
+    { id: 5, label: "栄養士" },
+    { id: 6, label: "学生" },
+    { id: 7, label: "その他" },
+];
+
 export default class Main extends React.Component {
 
     constructor(props) {
@@ -53,11 +66,9 @@ export default class Main extends React.Component {
         );
     };
     onBlurZipcode = () => {
-        console.log("onBlurZipcode")
         this.setState({
             prefecture: document.getElementById('prefecture').value,
             city: document.getElementById('city').value,
-            // address: document.getElementById('address').value
         });
     };
 
@@ -67,6 +78,7 @@ export default class Main extends React.Component {
     */
     componentDidMount = () => {
     }
+
     /**
      * Action
      *
@@ -137,6 +149,10 @@ export default class Main extends React.Component {
         this.setState({ policy: !this.state.policy })
     }
 
+    onChangeJob = (val) => {
+        this.setState({ job: val })
+    }
+
     isPolicyClicked = () => {
         return this.state.policy == 1
     }
@@ -174,18 +190,19 @@ export default class Main extends React.Component {
             city,
             address,
             notification,
+            job
         } = this.state
 
         var msg = [];
         if (!name) msg['name'] = ["名前が未入力です"]
         if (!email) msg['email'] = ["電子メールが未入力です"]
-        if (!tel) msg['tel'] = ["電話番号が未入力です"]
-        if (!facility) msg['facility'] = ["施設名が未入力です"]
-        if (!department) msg['department'] = ["部署が未入力です"]
+        if (!job) msg['job'] = ["ご職業が未入力です"]
         if (!zip_code) msg['zip_code'] = ["郵便番号が未入力です"]
         if (!prefecture) msg['prefecture'] = ["都道府県が未入力です"]
         if (!city) msg['city'] = ["市区町村が未入力です"]
         if (!address) msg['address'] = ["番地が未入力です"]
+        if (!facility) msg['facility'] = ["ご所属施設名が未入力です"]
+        if (!department) msg['department'] = ["ご所属（部門名・病棟など）が未入力です"]
         if (!notification) msg['notification'] = ["案内の希望が未入力です"]
 
         // if (Object.keys(msg) == 0) return true;
@@ -214,12 +231,11 @@ export default class Main extends React.Component {
     clearForm = () => {
         this.setState(initValues)
     }
+
     /**
      * Render
     *
     */
-
-
     renderErrorDialog = () => {
         var { show_error_dialog, error_messages } = this.state
 
@@ -232,13 +248,7 @@ export default class Main extends React.Component {
             <Dialog onClose={this.closeErrorDialog} open={show_error_dialog}>
                 <div className='error-dialog'>
                     <div className={'messages'}>
-
-                        {/* {Object.keys(error_messages).map((key) => {
-                            return (error_messages[key].map((msg) => <p>{msg}</p>))
-                        })} */}
-
                         {messages.map(msg => <p>{msg}</p>)}
-
                     </div>
                     <button onClick={this.closeErrorDialog} className="btn">閉じる</button>
                 </div>
@@ -325,45 +335,42 @@ export default class Main extends React.Component {
                         <div className="form-item">
 
                             <label className="form-label">お名前<span className="require">＊</span></label>
-                            <input className="form-input" type="text" name='name' onChange={this.onChangeName} value={this.state.name} />
+                            <input className="form-input" type="text" name='name' onChange={this.onChangeName} value={this.state.name} placeholder="お名前＊" />
                         </div>
 
                         <div className="form-item">
                             <label className="form-label">電子メール<span className="require">＊</span></label>
-                            <input className="form-input" type="email" name='email' onChange={this.onChangeEmail} value={this.state.email} />
-                        </div>
-
-                        <div className="form-item">
-                            <label className="form-label">電話番号<span className="require">＊</span></label>
-                            <input className="form-input" type="tel" name='tel' onChange={this.onChangeTel} value={this.state.tel} />
-                        </div>
-
-                        <div className="form-item">
-                            <label className="form-label">施設名<span className="require">＊</span></label>
-                            <input className="form-input" type='text' name='facility' onChange={this.onChangeFacility} value={this.state.facility} />
-                        </div>
-
-                        <div className="form-item">
-                            <label className="form-label">部署名<span className="require">＊</span></label>
-                            <input className="form-input" type='text' name='department' onChange={this.onChangeDepartment} value={this.state.department} />
+                            <input className="form-input" type="email" name='email' onChange={this.onChangeEmail} value={this.state.email} placeholder="電子メール＊" />
                         </div>
 
 
+                        <div class="form-item">
+                            <label class="form-label">ご職業<span class="require">＊</span></label>
+                            <select name="jobs" defaultValud={this.state} class='form-select' placeholder="選択してください" onChange={(e) => { this.onChangeJob(e.target.value) }} required>
+                                {jobs.map((job) => <option key={job.id} value={job.id} >{job.label}</option>)}
+                            </select>
+                            <input class="form-input hidden" type="text" name='job_other' placeholder="その他の方は詳細のご記入をお願い致します＊" />
+                        </div>
 
 
                         <div className="form-item">
                             <label className="form-label">ご住所<span className="require">＊</span></label>
-                            <input className="form-input" type='text' maxLength="7" name='zip_code' placeholder="郵便番号(数字のみでご入力ください)＊" onChange={this.onChangezip_code} value={this.state.zip_code} onKeyUp={this.complementAddress}
-                                onBlur={this.onBlurZipcode} />
-
+                            <input className="form-input" type='text' maxLength="7" name='zip_code' placeholder="郵便番号(数字のみでご入力ください)＊"
+                                value={this.state.zip_code}
+                                onChange={this.onChangezip_code}
+                                onKeyUp={this.complementAddress}
+                                onBlur={this.onBlurZipcode}
+                            />
                             <input className="form-input" type='text' name='prefecture' id='prefecture' required placeholder="都道府県＊" onChange={this.onChangePrefecture} value={this.state.prefecture} />
                             <input className="form-input" type='text' name='city' id='city' required placeholder="市区町村＊" onChange={this.onChangeCity} value={this.state.city} />
                             <input className="form-input" type='text' name='address' id='address' required placeholder="番地＊" onChange={this.onChangeAddress} value={this.state.address} />
+                            <input className="form-input" type='text' name='facility' onChange={this.onChangeFacility} value={this.state.facility} placeholder="ご所属施設名＊" />
+                            <input className="form-input" type='text' name='department' onChange={this.onChangeDepartment} value={this.state.department} placeholder="ご所属（部門名・病棟など）＊" />
+
                         </div>
 
                         <div className="form-item">
                             <label className="form-label">今後メンリッケヘルスケア株式会社からのセミナーや製品についてのご案内などをお受け取りになられることをご希望の場合は”はい”を選択して下さい。<span className="require">＊</span></label>
-
                             <div className="policy-wrapper">
                                 <span className="form-radio-wrap" onClick={() => this.clickNotification(1)}>
                                     <input type="radio" name="notification" id="notification-1" checked={this.isNoticicationChecked(1)} />
@@ -404,5 +411,7 @@ export default class Main extends React.Component {
         );
     }
 }
+
+
 
 
