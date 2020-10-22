@@ -170,9 +170,9 @@ export default class Main extends React.Component {
         if (this.validation()) {
             // 検証
             //server
-            // axios.post('/jona/api/public/', {
-            // local
-            axios.post('/api/public/', {
+            axios.post('/jona/api/public/', {
+                // local
+                // axios.post('/api/public/', {
                 ...this.state
             })
                 .then((res) => {
