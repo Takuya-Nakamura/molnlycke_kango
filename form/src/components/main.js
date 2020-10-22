@@ -166,7 +166,6 @@ export default class Main extends React.Component {
     }
 
     post = () => {
-        console.log(this.state)
         if (this.validation()) {
             // 検証
             //server
@@ -201,7 +200,6 @@ export default class Main extends React.Component {
             city,
             address,
             notification,
-
         } = this.state
 
         var msg = [];
