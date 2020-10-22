@@ -21,13 +21,14 @@ class CreatePostsTable extends Migration
             $table->integer('document_send')->nullable();
             $table->string('name');
             $table->string('email');
-            $table->string('tel');
-            $table->string('facility');
-            $table->string('department');
+            $table->string('job');
+            $table->string('job_other')->nullable();;
             $table->string('zip_code');
             $table->string('prefecture');
             $table->string('city');
             $table->string('address');
+            $table->string('facility');
+            $table->string('department');
             $table->boolean('notification');
             $table->timestamps();
         });

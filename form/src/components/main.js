@@ -16,6 +16,7 @@ var initValues = {
     name: '',
     email: '',
     job: '1',
+    job_other: '',
     zip_code: '',
     prefecture: '',
     city: '',
@@ -149,8 +150,15 @@ export default class Main extends React.Component {
         this.setState({ policy: !this.state.policy })
     }
 
-    onChangeJob = (val) => {
-        this.setState({ job: val })
+    onChangeJob = (e) => {
+        this.setState({ job: e.target.value })
+        if (e.target.value != 7) {
+            this.setState({ job_other: '' })
+        }
+    }
+
+    onChangeJobOther = (e) => {
+        this.setState({ job_other: e.target.value })
     }
 
     isPolicyClicked = () => {
@@ -158,11 +166,13 @@ export default class Main extends React.Component {
     }
 
     post = () => {
-
+        console.log(this.state)
         if (this.validation()) {
             // 検証
-            axios.post('/jona/api/public/', {
-                // local axios.post('/api/public/', {
+            //server
+            // axios.post('/jona/api/public/', {
+            // local
+            axios.post('/api/public/', {
                 ...this.state
             })
                 .then((res) => {
@@ -182,7 +192,8 @@ export default class Main extends React.Component {
         const {
             name,
             email,
-            tel,
+            job,
+            job_other,
             facility,
             department,
             zip_code,
@@ -190,13 +201,14 @@ export default class Main extends React.Component {
             city,
             address,
             notification,
-            job
+
         } = this.state
 
         var msg = [];
         if (!name) msg['name'] = ["名前が未入力です"]
         if (!email) msg['email'] = ["電子メールが未入力です"]
         if (!job) msg['job'] = ["ご職業が未入力です"]
+        if (job == 7 && !job_other) msg['job_other'] = ["ご職業、その他が未入力です"]
         if (!zip_code) msg['zip_code'] = ["郵便番号が未入力です"]
         if (!prefecture) msg['prefecture'] = ["都道府県が未入力です"]
         if (!city) msg['city'] = ["市区町村が未入力です"]
@@ -346,10 +358,10 @@ export default class Main extends React.Component {
 
                         <div class="form-item">
                             <label class="form-label">ご職業<span class="require">＊</span></label>
-                            <select name="jobs" defaultValud={this.state} class='form-select' placeholder="選択してください" onChange={(e) => { this.onChangeJob(e.target.value) }} required>
+                            <select name="jobs" defaultValud={this.state} class='form-select' placeholder="選択してください" onChange={(e) => { this.onChangeJob(e) }} required>
                                 {jobs.map((job) => <option key={job.id} value={job.id} >{job.label}</option>)}
                             </select>
-                            <input class="form-input hidden" type="text" name='job_other' placeholder="その他の方は詳細のご記入をお願い致します＊" />
+                            {this.state.job == 7 && <input class="form-input" type="text" name='job_other' placeholder="その他の方は詳細のご記入をお願い致します＊" onChange={(e) => { this.onChangeJobOther(e) }} />}
                         </div>
 
 

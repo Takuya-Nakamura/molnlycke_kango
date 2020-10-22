@@ -32,5 +32,17 @@ class Post extends Model
         return  $this->notification == 1 ? "はい" : "いいえ";
     }
 
+    public function jobLabel(){
+        $jobs =[
+            "1"=>"看護師",
+            "2"=>"皮膚排泄ケア認定看護師",
+            "3"=>"医師",
+            "4"=>"薬剤師",
+            "5"=>"栄養士",
+            "6"=>"学生",
+            "7"=>"その他",
+        ];
+        return $jobs[$this->job];
+    }
 
 }

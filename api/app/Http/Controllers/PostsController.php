@@ -13,8 +13,6 @@ class PostsController extends Controller
 {
     public function index()
     {
-        // $res = Mail::to("nakamura0803@gmail.com")->send(new UserMail());
-        // return response()->json(['page' => 'index']);
     }
 
     public function csv()
@@ -27,17 +25,20 @@ class PostsController extends Controller
             $post->detail_explain = $post->detail_explain();
             $post->document_send = $post->document_send();
             $post->notification = $post->notification();
+            $post->job = $post->jobLabel();
             return $post;
         });
 
-        $head = ['id', '詳細説明', '資料送付希望', '名前', 'メール', '電話', '施設名', '部署名', '郵便番号', '都道府県', '市区町村', '番地', '通知を希望する', '作成', '更新'];
-
+        // $head = ['id', '詳細説明', '資料送付希望', '名前', 'メール', '電話', '施設名', '部署名', '郵便番号', '都道府県', '市区町村', '番地', '通知を希望する', '作成', '更新'];
+        $head = ['id', '詳細説明', '資料送付希望', '名前', 'メール', '職業', '職業その他', '郵便番号', '都道府県', '市区町村', '番地', '所属施設', '所属部署', '通知を希望する', '作成', '更新'];
         // 書き込み用ファイルを開く
         $data = $data->toArray();
         ob_start();
         $f = fopen('php://output', 'w');
         fputcsv($f, $head);
-        foreach ($data as $row) {fputcsv($f, $row);}
+        foreach ($data as $row) {
+            fputcsv($f, $row);
+        }
         fclose($f);
 
         $res = ob_get_clean();
@@ -47,7 +48,6 @@ class PostsController extends Controller
         header("Content-Type: application/octet-stream");
         header('Content-Disposition: attachment; filename=list.csv');
         return $res;
-
     }
 
     // post
@@ -60,7 +60,6 @@ class PostsController extends Controller
                 // 'document_send' => 'required',
                 'name' => 'required',
                 'email' => 'required',
-                'tel' => 'required',
                 'facility' => 'required',
                 'department' => 'required',
                 'zip_code' => 'required',
@@ -68,10 +67,10 @@ class PostsController extends Controller
                 'city' => 'required',
                 'address' => 'required',
                 'notification' => 'required',
-
+                'job' => 'required',
             ],
             [
-                'required' => ':attribute 必須です。',
+                'required' => ':attributeは必須です。',
             ]
         );
 
@@ -85,6 +84,7 @@ class PostsController extends Controller
         //メール送信
         $res = Mail::to($request['email'])->send(new UserMail());
         $res = Mail::to("info.jp@molnlycke.com")->send(new CorporateMail($post));
+        // $res = Mail::to("nakamura0803@gmail.com")->send(new CorporateMail($post));
         return response()->json(['message' => 'success']);
     }
 }
