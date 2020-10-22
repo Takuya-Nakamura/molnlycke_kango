@@ -142,6 +142,10 @@ main{
   margin: 0 auto 10px;
 }
 
+.form .invalid {
+  border: 1px solid red;
+  background-color: #ffd9e1;
+}
 .form .hidden {
   display: none;
 }
@@ -207,6 +211,9 @@ main{
   text-align: left;
 }
 
+.address-notice{
+  color: red;
+}
 /* footer */
 
 footer{

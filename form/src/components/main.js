@@ -26,6 +26,7 @@ var initValues = {
 
     notification: null,
     policy: null,
+    zip_code_valid: true
 
 }
 
@@ -124,7 +125,11 @@ export default class Main extends React.Component {
 
 
     onChangezip_code = (e) => {
-        this.setState({ zip_code: e.target.value })
+
+        this.setState({
+            zip_code: e.target.value,
+            zip_code_valid: this.isValidZipCode(e.target.value)
+        })
     }
 
     onChangePrefecture = (e) => {
@@ -208,6 +213,7 @@ export default class Main extends React.Component {
         if (!job) msg['job'] = ["ご職業が未入力です"]
         if (job == 7 && !job_other) msg['job_other'] = ["ご職業、その他が未入力です"]
         if (!zip_code) msg['zip_code'] = ["郵便番号が未入力です"]
+        if (!this.isValidZipCode(zip_code)) msg['zip_code_format'] = ["郵便番号は「ー」は入力せず、数字のみ7桁で入力してください。"]
         if (!prefecture) msg['prefecture'] = ["都道府県が未入力です"]
         if (!city) msg['city'] = ["市区町村が未入力です"]
         if (!address) msg['address'] = ["番地が未入力です"]
@@ -240,6 +246,12 @@ export default class Main extends React.Component {
 
     clearForm = () => {
         this.setState(initValues)
+    }
+
+    isValidZipCode = (value) => {
+        //数字7桁のみ
+        var pattern = /^\d{7}$/;
+        return pattern.test(value)
     }
 
     /**
@@ -285,6 +297,8 @@ export default class Main extends React.Component {
 
     render() {
         console.log(this.state)
+
+        var zipcode_class = this.state.zip_code_valid == true ? "" : "invalid"
         return (
             <main className="main">
                 {this.renderErrorDialog()}
@@ -364,13 +378,15 @@ export default class Main extends React.Component {
 
 
                         <div className="form-item">
-                            <label className="form-label">ご住所<span className="require">＊</span></label>
-                            <input className="form-input" type='text' maxLength="7" name='zip_code' placeholder="郵便番号(数字のみでご入力ください)＊"
+                            <label className="form-label">ご住所<span className="require">＊  </span> <span class="address-notice">※資料・特製ロゴ入りトートバッグ送付先</span></label>
+                            {this.state.zip_code_valid == false && <p class="address-notice">郵便番号は「ー」は入力せず、数字のみ7桁で入力してください。</p>}
+                            <input className={`form-input ${zipcode_class}`} type='text' maxLength="7" name='zip_code' placeholder="郵便番号(数字のみでご入力ください)＊"
                                 value={this.state.zip_code}
                                 onChange={this.onChangezip_code}
                                 onKeyUp={this.complementAddress}
                                 onBlur={this.onBlurZipcode}
                             />
+
                             <input className="form-input" type='text' name='prefecture' id='prefecture' required placeholder="都道府県＊" onChange={this.onChangePrefecture} value={this.state.prefecture} />
                             <input className="form-input" type='text' name='city' id='city' required placeholder="市区町村＊" onChange={this.onChangeCity} value={this.state.city} />
                             <input className="form-input" type='text' name='address' id='address' required placeholder="番地＊" onChange={this.onChangeAddress} value={this.state.address} />
