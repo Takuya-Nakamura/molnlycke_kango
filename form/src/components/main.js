@@ -13,14 +13,16 @@ import IconButton from '@material-ui/core/IconButton';
 var initValues = {
     detail_explain: null,
     document_send: null,
+    zip_code: '',
+    prefecture: '',
+    city: '',
+    address_type: '',
+    address: '',
+
     name: '',
     email: '',
     job: '1',
     job_other: '',
-    zip_code: '',
-    prefecture: '',
-    city: '',
-    address: '',
     facility: '',
     department: '',
 
@@ -94,9 +96,23 @@ export default class Main extends React.Component {
     }
 
     onClickDocumentSend = () => {
-        this.setState({
-            document_send: this.state.document_send ? 0 : 1
-        })
+        if (this.state.document_send == 0) {
+            this.setState({
+                document_send: 1
+            })
+
+        } else {
+            this.setState({
+                document_send: 0,
+                address_type: '',
+                zip_code: '',
+                prefecture: '',
+                city: '',
+                address: '',
+
+            })
+
+        }
     }
 
     isClickDocumentSend = () => {
@@ -147,10 +163,18 @@ export default class Main extends React.Component {
     clickNotification = (val) => {
         this.setState({ notification: val })
     }
-
     isNoticicationChecked = (val) => {
         return this.state.notification == val
     }
+
+    clickAddressType = (val) => {
+        this.setState({ address_type: val })
+    }
+    isAddressTypeChecked = (val) => {
+        return this.state.address_type == val
+    }
+
+
     onClickPolicy = (e) => {
         this.setState({ policy: !this.state.policy })
     }
@@ -174,9 +198,9 @@ export default class Main extends React.Component {
         if (this.validation()) {
             // 検証
             //server
-            axios.post('/jona/api/public/', {
-                // local
-                // axios.post('/api/public/', {
+            // axios.post('/jona/api/public/', {
+            // local
+            axios.post('/api/public/', {
                 ...this.state
             })
                 .then((res) => {
@@ -204,7 +228,9 @@ export default class Main extends React.Component {
             prefecture,
             city,
             address,
+            address_type,
             notification,
+            document_send,
         } = this.state
 
         var msg = [];
@@ -212,14 +238,21 @@ export default class Main extends React.Component {
         if (!email) msg['email'] = ["電子メールが未入力です"]
         if (!job) msg['job'] = ["ご職業が未入力です"]
         if (job == 7 && !job_other) msg['job_other'] = ["ご職業、その他が未入力です"]
-        if (!zip_code) msg['zip_code'] = ["郵便番号が未入力です"]
-        if (!this.isValidZipCode(zip_code)) msg['zip_code_format'] = ["郵便番号は「ー」は入力せず、数字のみ7桁で入力してください。"]
-        if (!prefecture) msg['prefecture'] = ["都道府県が未入力です"]
-        if (!city) msg['city'] = ["市区町村が未入力です"]
-        if (!address) msg['address'] = ["番地が未入力です"]
+
         if (!facility) msg['facility'] = ["ご所属施設名が未入力です"]
+        //勤務先
         if (!department) msg['department'] = ["ご所属（部門名・病棟など）が未入力です"]
         if (!notification) msg['notification'] = ["案内の希望が未入力です"]
+        //送付先住所
+        if (document_send == 1) {
+            console.log("document_send")
+            if (!zip_code) msg['zip_code'] = ["郵便番号が未入力です"]
+            if (!this.isValidZipCode(zip_code)) msg['zip_code_format'] = ["郵便番号は「ー」は入力せず、半角数字7桁で入力してください。"]
+            if (!prefecture) msg['prefecture'] = ["都道府県が未入力です"]
+            if (!city) msg['city'] = ["市区町村が未入力です"]
+            if (!address_type) msg['address_type'] = ["ご住所が「ご自宅」か「ご施設」か選択してください。"]
+            if (!address) msg['address'] = ["番地が未入力です"]
+        }
 
         // if (Object.keys(msg) == 0) return true;
         if (this.objectKeyCount(msg) == 0) return true;
@@ -284,7 +317,6 @@ export default class Main extends React.Component {
         return (
             <Dialog onClose={this.closeCompleteDialog} open={show_complete_dialog}>
                 <div className='error-dialog'>
-
                     <div className={'messages'}>
                         アンケートのご回答ありがとうございました。
                     </div>
@@ -294,11 +326,43 @@ export default class Main extends React.Component {
         );
     }
 
+    renderSendAdress = () => {
+        var zipcode_class = this.state.zip_code_valid == true ? "" : "invalid"
+        return (
+            <div>
+                <div className="address-wrapper">
+                    <label className="form-label">資料・特製ロゴ入りトートバッグ送付先<span className="require">＊  </span></label>
+                    <div className="address-type">
+                        <span className="form-radio-wrap" onClick={() => this.clickAddressType(1)}>
+                            <input type="radio" name="address-type" id="address-type-1" checked={this.isAddressTypeChecked(1)} />
+                            <label forHtml="address-type-1">ご施設</label>
+                        </span>
+                        <span className="form-radio-wrap" onClick={() => this.clickAddressType(2)}>
+                            <input type="radio" name="address-type" id="address-type-2" checked={this.isAddressTypeChecked(2)} />
+                            <label forHtml="address-type-2">ご自宅</label>
+                        </span>
+                    </div>
+                </div>
+
+                {this.state.zip_code_valid == false && <p class="address-notice">郵便番号は「ー」は入力せず、半角数字7桁で入力してください。</p>}
+                <input className={`form-input ${zipcode_class}`} type='text' maxLength="7" name='zip_code' placeholder="郵便番号(数字のみでご入力ください)＊"
+                    value={this.state.zip_code}
+                    onChange={this.onChangezip_code}
+                    onKeyUp={this.complementAddress}
+                    onBlur={this.onBlurZipcode}
+                />
+
+                <input className="form-input" type='text' name='prefecture' id='prefecture' required placeholder="都道府県＊" onChange={this.onChangePrefecture} value={this.state.prefecture} />
+                <input className="form-input" type='text' name='city' id='city' required placeholder="市区町村＊" onChange={this.onChangeCity} value={this.state.city} />
+                <input className="form-input" type='text' name='address' id='address' required placeholder="番地＊" onChange={this.onChangeAddress} value={this.state.address} />
+            </div>
+        )
+    }
 
     render() {
         console.log(this.state)
 
-        var zipcode_class = this.state.zip_code_valid == true ? "" : "invalid"
+
         return (
             <main className="main">
                 {this.renderErrorDialog()}
@@ -315,7 +379,6 @@ export default class Main extends React.Component {
                 </div>
 
                 <div className="product-description" >
-
                     <img className="product_image" src="./images/product1.png"></img>
                     <img className="product_image" src="./images/product2.png"></img>
                 </div>
@@ -346,9 +409,13 @@ export default class Main extends React.Component {
                                 メピレックス ボーダー プロテクトについて、さらに詳しい資料をお送りします。
                                 資料送付のご希望を頂いた方には特製ロゴ入りトートバッグを差し上げます。
                             </label>
-                            <div className="form-radio-wrap" onClick={this.onClickDocumentSend}>
-                                <input type="checkbox" name="document_send" id="document_send" checked={this.isClickDocumentSend()} />
-                                <label >資料送付希望</label>
+
+                            <div className="form-radio-wrap">
+                                <div className="document_send-wrapper" onClick={this.onClickDocumentSend}>
+                                    <input type="checkbox" name="document_send" id="document_send" checked={this.isClickDocumentSend()} />
+                                    <label >資料送付希望</label>
+                                </div>
+                                {this.state.document_send == 1 && this.renderSendAdress()}
                             </div>
                         </div>
 
@@ -378,18 +445,21 @@ export default class Main extends React.Component {
 
 
                         <div className="form-item">
-                            <label className="form-label">ご住所<span className="require">＊  </span> <span class="address-notice">※資料・特製ロゴ入りトートバッグ送付先</span></label>
-                            {this.state.zip_code_valid == false && <p class="address-notice">郵便番号は「ー」は入力せず、数字のみ7桁で入力してください。</p>}
-                            <input className={`form-input ${zipcode_class}`} type='text' maxLength="7" name='zip_code' placeholder="郵便番号(数字のみでご入力ください)＊"
-                                value={this.state.zip_code}
-                                onChange={this.onChangezip_code}
-                                onKeyUp={this.complementAddress}
-                                onBlur={this.onBlurZipcode}
-                            />
+                            <label className="form-label">勤務先<span className="require">＊</span></label>
 
-                            <input className="form-input" type='text' name='prefecture' id='prefecture' required placeholder="都道府県＊" onChange={this.onChangePrefecture} value={this.state.prefecture} />
-                            <input className="form-input" type='text' name='city' id='city' required placeholder="市区町村＊" onChange={this.onChangeCity} value={this.state.city} />
-                            <input className="form-input" type='text' name='address' id='address' required placeholder="番地＊" onChange={this.onChangeAddress} value={this.state.address} />
+                            {/* <div className="address-type">
+                                <span className="form-radio-wrap" onClick={() => this.clickAddressType(1)}>
+                                    <input type="radio" name="address-type" id="address-type-1" checked={this.isAddressTypeChecked(1)} />
+                                    <label forHtml="address-type-1">ご施設</label>
+                                </span>
+                                <span className="form-radio-wrap" onClick={() => this.clickAddressType(2)}>
+                                    <input type="radio" name="address-type" id="address-type-2" checked={this.isAddressTypeChecked(2)} />
+                                    <label forHtml="address-type-2">ご自宅</label>
+                                </span>
+                            </div> */}
+
+
+
                             <input className="form-input" type='text' name='facility' onChange={this.onChangeFacility} value={this.state.facility} placeholder="ご所属施設名＊" />
                             <input className="form-input" type='text' name='department' onChange={this.onChangeDepartment} value={this.state.department} placeholder="ご所属（部門名・病棟など）＊" />
 
@@ -400,11 +470,11 @@ export default class Main extends React.Component {
                             <div className="policy-wrapper">
                                 <span className="form-radio-wrap" onClick={() => this.clickNotification(1)}>
                                     <input type="radio" name="notification" id="notification-1" checked={this.isNoticicationChecked(1)} />
-                                    <label for="notification-1">はい</label>
+                                    <label forHtml="notification-1">はい</label>
                                 </span>
                                 <span className="form-radio-wrap" onClick={() => this.clickNotification(2)}>
                                     <input type="radio" name="notification" id="notification-2" checked={this.isNoticicationChecked(2)} />
-                                    <label for="notification-2">いいえ</label>
+                                    <label forHtml="notification-2">いいえ</label>
                                 </span>
 
                                 <p className="submit-note" >

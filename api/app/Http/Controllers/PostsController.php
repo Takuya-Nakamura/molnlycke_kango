@@ -26,11 +26,12 @@ class PostsController extends Controller
             $post->document_send = $post->document_send();
             $post->notification = $post->notification();
             $post->job = $post->jobLabel();
+            $post->address_type = $post->address_type();
             return $post;
         });
 
         // $head = ['id', '詳細説明', '資料送付希望', '名前', 'メール', '電話', '施設名', '部署名', '郵便番号', '都道府県', '市区町村', '番地', '通知を希望する', '作成', '更新'];
-        $head = ['id', '詳細説明', '資料送付希望', '名前', 'メール', '職業', '職業その他', '郵便番号', '都道府県', '市区町村', '番地', '所属施設', '所属部署', '通知を希望する', '作成', '更新'];
+        $head = ['id', '詳細説明', '資料送付希望',  '施設/自宅', '郵便番号', '都道府県', '市区町村', '番地', '名前', 'メール', '職業', '職業その他', '所属施設', '所属部署', '通知を希望する', '作成', '更新'];
         // 書き込み用ファイルを開く
         $data = $data->toArray();
         ob_start();
@@ -62,10 +63,12 @@ class PostsController extends Controller
                 'email' => 'required',
                 'facility' => 'required',
                 'department' => 'required',
-                'zip_code' => 'required',
-                'prefecture' => 'required',
-                'city' => 'required',
-                'address' => 'required',
+
+                // 'zip_code' => 'required',
+                // 'prefecture' => 'required',
+                // 'city' => 'required',
+                // 'address' => 'required',
+
                 'notification' => 'required',
                 'job' => 'required',
             ],
@@ -84,7 +87,7 @@ class PostsController extends Controller
         //メール送信
         $res = Mail::to($request['email'])->send(new UserMail());
         $res = Mail::to("info.jp@molnlycke.com")->send(new CorporateMail($post));
-        // $res = Mail::to("nakamura0803@gmail.com")->send(new CorporateMail($post));
+        //$res = Mail::to("nakamura0803@gmail.com")->send(new CorporateMail($post));
         return response()->json(['message' => 'success']);
     }
 }
