@@ -196,11 +196,13 @@ export default class Main extends React.Component {
 
     post = () => {
         if (this.validation()) {
-            // 検証
-            //server
-            axios.post('/jona/api/public/', {
-                // local
-                // axios.post('/api/public/', {
+            var url = '/jona/api/public/'
+            var domain = window.location.host
+            if (domain.match("localhost") || domain.match("127.0.0.1")) {
+                url = '/api/public/'
+            }
+            console.log("url", url)
+            axios.post(url, {
                 ...this.state
             })
                 .then((res) => {
@@ -375,6 +377,7 @@ export default class Main extends React.Component {
                     <p>昨今、術中における皮膚保護が大きく見直されてきております。</p>
                     <p>関連の資料をお送りさせて頂きますので、下記のフォームよりお申込み下さい。</p>
                     <p>資料をご希望頂いた皆さまには、特製ロゴ入りトートバッグを差し上げます。</p>
+                    <p>(発送は12月上旬頃予定)</p>
 
                 </div>
 
